@@ -20,6 +20,7 @@
         rguilayout = pkgs.callPackage ./pkgs/rguilayout { inherit zenity; };
         rfxgen = pkgs.callPackage ./pkgs/rfxgen { inherit zenity; };
         rguiicons = pkgs.callPackage ./pkgs/rguiicons { inherit zenity; };
+        riconpacker = pkgs.callPackage ./pkgs/riconpacker { inherit zenity; };
       };
     }
   );
