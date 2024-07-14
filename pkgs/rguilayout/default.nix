@@ -53,10 +53,7 @@
     runHook preInstall
 
     mkdir -p $out/bin
-    mkdir -p $out/share/${pname}/layouts
-
     cp src/${pname} $out/bin/
-    cp -r layouts/. $out/share/${pname}/layouts/
 
     ${lib.optionalString (dialogImplementation == "zenity") "wrapProgram $out/bin/${pname} --prefix PATH : ${lib.makeBinPath [ zenity ]}"}
     ${lib.optionalString (dialogImplementation == "kdialog") "wrapProgram $out/bin/${pname} --prefix PATH : ${lib.makeBinPath [ kdePackages.kdialog ]}"}
@@ -67,7 +64,6 @@
       mkdir -p $out/share/icons/hicolor/$size/apps
       cp logo/rguilayout_$size.png $out/share/icons/hicolor/$size/apps/${pname}.png
     done;
-
 
     runHook postInstall
   '';
