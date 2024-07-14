@@ -18,6 +18,12 @@
           # Therefore, look for zenity to be either in pkgs.gnome or pkgs.
           inherit (if builtins.hasAttr "zenity" pkgs.gnome then pkgs.gnome else pkgs) zenity;
         };
+
+        rfxgen = pkgs.callPackage ./pkgs/rfxgen { 
+          # The zenity package was recently moved out of the gnome package set.
+          # Therefore, look for zenity to be either in pkgs.gnome or pkgs.
+          inherit (if builtins.hasAttr "zenity" pkgs.gnome then pkgs.gnome else pkgs) zenity;
+        };
       };
     }
   );
