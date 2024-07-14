@@ -1,5 +1,5 @@
 --- a/src/Makefile	2024-07-13 16:25:49.893912966 -0400
-+++ b/src/Makefile	2024-07-13 17:19:16.332675080 -0400
++++ b/src/Makefile	2024-07-14 11:22:03.422984242 -0400
 @@ -147,7 +147,7 @@
  #  -Wno-missing-braces  ignore invalid warning (GCC bug 53119)
  #  -Wno-unused-value    ignore unused return values of some functions (i.e. fread())
@@ -9,23 +9,3 @@
  #CFLAGS += -Wextra -Wmissing-prototypes -Wstrict-prototypes
  
  ifeq ($(BUILD_MODE),DEBUG)
-@@ -265,14 +265,11 @@
-         LDLIBS = -lraylib -lGL -lm -lpthread -ldl -lrt
- 
-         # On Wayland windowing system, additional libraries requires
--        ifeq ($(USE_WAYLAND_DISPLAY),TRUE)
--            LDLIBS += -lwayland-client -lwayland-cursor -lwayland-egl -lxkbcommon
--        else
--            # On X11 requires also below libraries
--            LDLIBS += -lX11
--            # NOTE: It seems additional libraries are not required any more, latest GLFW just dlopen them
--            #LDLIBS += -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor
--        endif
-+        LDLIBS += -lwayland-client -lwayland-cursor -lwayland-egl -lxkbcommon
-+        # On X11 requires also below libraries
-+        LDLIBS += -lX11
-+        # NOTE: It seems additional libraries are not required any more, latest GLFW just dlopen them
-+        #LDLIBS += -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor
-         # Explicit link to libc
-         ifeq ($(RAYLIB_LIBTYPE),SHARED)
-             LDLIBS += -lc

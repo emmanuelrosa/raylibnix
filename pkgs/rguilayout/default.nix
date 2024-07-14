@@ -6,8 +6,6 @@
 , raylib
 , xorg
 , libGL
-, wayland
-, libxkbcommon
 , makeWrapper
 , makeDesktopItem
 , copyDesktopItems
@@ -43,8 +41,6 @@
                   xorg.libXcursor
                   xorg.libXxf86vm
                   xorg.libXinerama 
-                  wayland
-                  libxkbcommon
                 ];
 
   buildPhase = ''
