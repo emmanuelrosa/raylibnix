@@ -15,8 +15,6 @@
     in
     {
       packages = {
-        raylib_5 = pkgs.raylib;
-        raylib-games = pkgs.raylib-games;
         rguilayout = pkgs.callPackage ./pkgs/rguilayout { inherit zenity; };
         rfxgen = pkgs.callPackage ./pkgs/rfxgen { inherit zenity; };
         rguiicons = pkgs.callPackage ./pkgs/rguiicons { inherit zenity; };
