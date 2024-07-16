@@ -1,6 +1,6 @@
 # raylibnix
 
-This repository contains Nix packages for [raylib](https://www.raylib.com) tools:
+This repository contains NixOS packages for [raylib](https://www.raylib.com) tools:
 
 ```json
 {
@@ -35,4 +35,4 @@ These raylib tools use [tinyfiledialogs](https://sourceforge.net/projects/tinyfi
 
 ## Caveats
 
-- If you use these packages on a Linux distribution other than NixOS, you'll need to use [nixGL](https://github.com/nix-community/nixGL) or an equivalent to provide the OpenGL drivers; The OpenGL drivers installed on your native Linux distribution will not be used by Nix packages.
+- I don't recommend using these packages on a Linux distribution other than NixOS. But if you insist, you'll need to use [nixGL](https://github.com/nix-community/nixGL) or an equivalent to provide the OpenGL drivers; The OpenGL drivers installed on your native Linux distribution will not be used by Nix packages.
