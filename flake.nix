@@ -25,6 +25,10 @@
 
         rguiicons = pkgs.callPackage ./pkgs/rguiicons { inherit zenity; };
         riconpacker = pkgs.callPackage ./pkgs/riconpacker { inherit zenity; };
+
+        raylib-games = pkgs.raylib-games.override {
+          raylib = self.packages.${system}.raylib;
+        };
       };
     }
   );
