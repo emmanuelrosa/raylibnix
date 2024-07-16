@@ -15,8 +15,14 @@
     in
     {
       packages = {
+        raylib = pkgs.callPackage ./pkgs/raylib { };
         rguilayout = pkgs.callPackage ./pkgs/rguilayout { inherit zenity; };
-        rfxgen = pkgs.callPackage ./pkgs/rfxgen { inherit zenity; };
+
+        rfxgen = pkgs.callPackage ./pkgs/rfxgen {
+          inherit zenity; 
+          raylib = self.packages.${system}.raylib;
+        };
+
         rguiicons = pkgs.callPackage ./pkgs/rguiicons { inherit zenity; };
         riconpacker = pkgs.callPackage ./pkgs/riconpacker { inherit zenity; };
       };

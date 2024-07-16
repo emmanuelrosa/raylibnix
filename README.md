@@ -36,4 +36,3 @@ These raylib tools use [tinyfiledialogs](https://sourceforge.net/projects/tinyfi
 ## Caveats
 
 - If you use these packages on a Linux distribution other than NixOS, you'll need to use [nixGL](https://github.com/nix-community/nixGL) or an equivalent to provide the OpenGL drivers; The OpenGL drivers installed on your native Linux distribution will not be used by Nix packages.
-- `rfxgen` doesn't produce audible sound.
