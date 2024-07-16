@@ -3,7 +3,7 @@
 , fetchFromGitHub
 , cmake
 , fetchpatch
-, symlinkJoin
+, patchelf
 , mesa
 , libGLU
 , glfw
@@ -35,7 +35,7 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-gEstNs3huQ1uikVXOW4uoYnIDr5l8O9jgZRTX1mkRww=";
   };
 
-  nativeBuildInputs = [ cmake ];
+  nativeBuildInputs = [ cmake patchelf ];
 
   buildInputs = [ glfw ]
     ++ lib.optionals stdenv.isLinux [ mesa libXi libXcursor libXrandr libXinerama ]
@@ -45,15 +45,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   propagatedBuildInputs = lib.optionals stdenv.isLinux [ libGLU libX11 ]
     ++ lib.optionals stdenv.isDarwin [ OpenGL ];
-
-  # On Linux, a path is created for the ALSA and PulseAudio libraries.
-  # This path is then patched into miniaudio.h so that it can find the libraries.
-  env.linuxAudioLibs = symlinkJoin {
-    name = "raylib-linux-audio-libs";
-    paths = []
-      ++ lib.optional alsaSupport "${alsa-lib}/lib"
-      ++ lib.optional pulseSupport "${libpulseaudio}/lib";
-  };
 
   # https://github.com/raysan5/raylib/wiki/CMake-Build-Options
   cmakeFlags = [
@@ -75,14 +66,13 @@ stdenv.mkDerivation (finalAttrs: {
       url = "https://github.com/raysan5/raylib/commit/032cc497ca5aaca862dc926a93c2a45ed8017737.patch";
       hash = "sha256-qsX5AwyQaGoRsbdszOO7tUF9dR+AkEFi4ebNkBVHNEY=";
     })
-       # Patch miniaudio.h so that dlopen() is called with an absolute path.
-       # to libpulse and libasound. However, the patch uses an environment variable
-       # which is resolved in preConfigure.
-  ] ++ lib.optional (alsaSupport || pulseSupport) ./miniaudio.patch;
+  ];
 
-  preConfigure = ''
-    # Resolve the absolute path to ALSA and/or PulseAudio which was patched in as an environment variable.
-    ${lib.optionalString (alsaSupport || pulseSupport) "substituteAllInPlace src/external/miniaudio.h"}
+  postInstall = ''
+    # If ALSA or PulseAudio support are enabled, add the path to those libraries to
+    # raylib, so that when miniaudio uses dlopen() it's able to find the libraries.
+    ${lib.optionalString alsaSupport "patchelf $out/lib/libraylib.so.${finalAttrs.version}.* --add-needed ${alsa-lib}/lib/libasound.so.2"}
+    ${lib.optionalString pulseSupport "patchelf $out/lib/libraylib.so.${finalAttrs.version}.* --add-needed ${libpulseaudio}/lib/libpulse.so.0"}
   '';
 
   meta = with lib; {
